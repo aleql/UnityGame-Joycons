@@ -12,6 +12,7 @@ public class GameOver : MonoBehaviour
     public GameObject canvasPuntaje;
     public GameObject canvasAngulo;
     public GameObject canvasPause;
+    public GameObject canvasManzanas;
 
     private bool pause;
 
@@ -44,6 +45,7 @@ public class GameOver : MonoBehaviour
         ObstaculoGen.SetActive(true);
         canvasPuntaje.SetActive(true);
         canvasAngulo.SetActive(true);
+        canvasManzanas.SetActive(true);
         Time.timeScale = 1;
     }
 
