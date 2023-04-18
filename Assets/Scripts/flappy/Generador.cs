@@ -15,7 +15,7 @@ public class Generador : MonoBehaviour
     {
         GameObject newObs = Instantiate(obstaculo[0]);
         newObs.transform.position = transform.position +new Vector3(0,0,0);
-        Destroy(newObs, 6);
+        Destroy(newObs, 12);
     }
 
     // Update is called once per frame
@@ -25,7 +25,7 @@ public class Generador : MonoBehaviour
             int RandomOption = Random.Range(0, obstaculo.Length);
             GameObject newObs = Instantiate(obstaculo[RandomOption]);
             newObs.transform.position = transform.position +new Vector3(0,0,0);
-            Destroy(newObs, 6);
+            Destroy(newObs, 12);
             tiempoInicial = 0;
         }
         else{

@@ -15,10 +15,11 @@ public class Controller : MonoBehaviour
     
     public bool Calibration;
     public bool StartGame;
+    public bool Tutorialbool;
 
     private Vector3 direction;
     
-    public GameOver gameOver;
+    public CanvasController canvasController;
 
     public GameObject ala_der;
     public GameObject rot_der;
@@ -48,6 +49,7 @@ public class Controller : MonoBehaviour
     {   
         startTime = Time.time;
         Calibration = false;
+        Tutorialbool = true;
         StartGame = true;
         joycons = JoyconManager.Instance.j;
         Vector3 position = transform.position;
@@ -90,15 +92,21 @@ public class Controller : MonoBehaviour
     void Update() {
         if (joycons.Count >= 0)
         {
-            if (Calibration == false && joy_left.GetButton(Joycon.Button.SHOULDER_2) && joy_right.GetButton(Joycon.Button.SHOULDER_2)){
+            if (Calibration == false && joy_left.GetButtonDown(Joycon.Button.SHOULDER_2) && joy_right.GetButtonDown(Joycon.Button.SHOULDER_2)){
                 joy_right.Recenter();
                 joy_left.Recenter();
                 Calibration = true;
-                gameOver.CalibrationEnd();
+                canvasController.CalibrationEnd();
+                Tutorialbool = false;
+            }
+            if (Tutorialbool == false && joy_left.GetButtonDown(Joycon.Button.SHOULDER_1) && joy_right.GetButtonDown(Joycon.Button.SHOULDER_1)){
+                Tutorialbool = true;
+                canvasController.TutorialEnd();
                 StartGame = false;
             }
-            if (StartGame == false && joy_left.GetButton(Joycon.Button.SHOULDER_1) && joy_right.GetButton(Joycon.Button.SHOULDER_1)){
-                gameOver.StartPointEnd();
+
+            if (StartGame == false && joy_left.GetButtonDown(Joycon.Button.SHOULDER_2) && joy_right.GetButtonDown(Joycon.Button.SHOULDER_2)){
+                canvasController.StartPointEnd();
                 StartGame = true;
                 Quaternion orient_left = joy_left.GetVector();
                 Quaternion orient_right = joy_right.GetVector();
@@ -110,7 +118,7 @@ public class Controller : MonoBehaviour
                 prev_angle_right = Vector3.Angle(cube_right.transform.up, Vector3.up);
             }
             if ( joy_left.GetButtonDown(Joycon.Button.DPAD_DOWN) && joy_right.GetButtonDown(Joycon.Button.DPAD_DOWN)){
-                gameOver.Pause();
+                canvasController.Pause();
             }
         }
     }
@@ -127,8 +135,8 @@ public class Controller : MonoBehaviour
             cube_right.transform.rotation = orient_right;
             cube_right.transform.Rotate(90,0,0,Space.World);
             
-            angle_right = Vector3.Angle(cube_right.transform.up, Vector3.up);
-            angle_left = Vector3.Angle(cube_left.transform.up, Vector3.up);
+            angle_right = Vector3.Angle(cube_right.transform.forward*-1, Vector3.up);
+            angle_left = Vector3.Angle(cube_left.transform.forward*-1, Vector3.up);
             
             Angulos.angle_der = ((int) angle_right);
             Angulos.angle_izq = ((int) angle_left);
@@ -141,8 +149,8 @@ public class Controller : MonoBehaviour
             rot_der.transform.localEulerAngles = new Vector3(0,0,angle_right-90);
             rot_izq.transform.localEulerAngles = new Vector3(0,0,-angle_left+90);
 
-            float log_der = Mathf.Log(Mathf.Max(1,angle_right))/Mathf.Log(360);
-            float log_izq = Mathf.Log(Mathf.Max(1,angle_left))/Mathf.Log(360);
+            float log_der = Mathf.Pow(Mathf.Max(1,angle_right), 1f / 8f) -1;
+            float log_izq = Mathf.Pow(Mathf.Max(1,angle_left), 1f/ 8f) -1;
             Grad_force_der = var_angle_der * log_der * strength * Time.deltaTime;
             Grad_force_izq = var_angle_izq * log_izq * strength * Time.deltaTime;
 
@@ -150,10 +158,10 @@ public class Controller : MonoBehaviour
             if(Grad_force_izq <0) Grad_force_izq = 0; //esta subiendo el brazo, no recibe castigo
 
             if(Grad_force_der > 1+Grad_force_izq){ //si un brazo realiza mas fuerza que el otro
-                direction.x -= 2*(Grad_force_der-Grad_force_izq);
+                direction.x -= (Grad_force_der-Grad_force_izq);
             }
             else if(Grad_force_izq > 1+Grad_force_der){
-                direction.x += 2*(Grad_force_izq-Grad_force_der);
+                direction.x += (Grad_force_izq-Grad_force_der);
             }
             else{ //amortigua la inclinación si esta balanceado
                 direction.x = direction.x*0.9f;
@@ -191,7 +199,8 @@ public class Controller : MonoBehaviour
             +var_angle_der.ToString()
             +";"
             +PuntajeCanvas.puntaje
-            +";manzanas");
+            +";"
+            +PuntajeManzana.manzanas);
         }
     }
 
@@ -199,6 +208,6 @@ public class Controller : MonoBehaviour
     private void OnCollisionEnter(Collision other) {
         sw.Close();
         PlayerPrefs.SetInt("Puntaje", PuntajeCanvas.puntaje);
-        gameOver.Perdiste();
+        canvasController.Perdiste();
     }
 }

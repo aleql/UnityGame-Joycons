@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class dontDestroy : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        DontDestroyOnLoad(gameObject);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    static dontDestroy instance;
+ 
+     void Awake()
+     {
+         if(instance == null)
+         {    
+             instance = this; // In first scene, make us the singleton.
+             DontDestroyOnLoad(gameObject);
+         }
+         else if(instance != this)
+             Destroy(gameObject); // On reload, singleton already set, so destroy duplicate.
+     } 
 }

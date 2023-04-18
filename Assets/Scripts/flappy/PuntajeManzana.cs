@@ -6,6 +6,7 @@ public class PuntajeManzana : MonoBehaviour
 {
     // Start is called before the first frame update
     public float velocidad;
+    public static int manzanas;
     void Start()
     {
         
@@ -21,6 +22,7 @@ public class PuntajeManzana : MonoBehaviour
     private void OnTriggerEnter(Collider other) {
         if (other.gameObject.name == "Player") 
     {
+        manzanas++;
         PuntajeCanvas.puntaje += 100;
         Destroy(gameObject);
     }
