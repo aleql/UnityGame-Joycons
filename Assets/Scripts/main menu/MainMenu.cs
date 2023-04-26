@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System;
 
 public class MainMenu : MonoBehaviour
 {
+
     private List<Joycon> joycons;
     public float[] stick_left;
     public float[] stick_right;
@@ -24,10 +26,22 @@ public class MainMenu : MonoBehaviour
     public float prev_left;
     public float prev_right;
 
-    public int pos;
+    [SerializeField]
+    private int pos_left, pos_right;
+    
+    [SerializeField]
+    private int initialPos;
 
     public GameObject[] buttons;
+    
+    public bool pressed_left = true;
+    public bool pressed_right = true;
+
+
+    
     // Start is called before the first frame update
+
+
     void Start()
     {
         joycons = JoyconManager.Instance.j;
@@ -44,7 +58,11 @@ public class MainMenu : MonoBehaviour
         }
         prev_left = 0;
         prev_right = 0;
-        pos = 0;
+        pos_left = -1;
+        pos_right = -1;
+        
+        pressed_left = joy_left.GetButton(Joycon.Button.SHOULDER_2);
+        pressed_right = joy_right.GetButton(Joycon.Button.SHOULDER_2);
     }
 
     // Update is called once per frame
@@ -63,70 +81,41 @@ public class MainMenu : MonoBehaviour
             Debug.DrawRay(cube_left.transform.position, cube_left.transform.forward*500, Color.blue);
             Debug.DrawRay(cube_right.transform.position, cube_right.transform.forward*500, Color.red);
         }
-
-        RaycastHit hit_left;
-
-        if (Physics.Raycast(cube_left.transform.position, cube_left.transform.forward,out hit_left, Mathf.Infinity))
-        {   
-            left_circle.transform.position = hit_left.point;
-
-            Debug.DrawRay(cube_left.transform.position, cube_left.transform.forward * hit_left.distance, Color.yellow);
-            //Debug.Log("Did Hit");
-            GameObject colliderObject = hit_left.collider.gameObject;
-            Button button = colliderObject.GetComponent<Button>();
-            if(button != null && joy_left.GetButtonDown(Joycon.Button.SHOULDER_2)){
-                button.onClick.Invoke();
-            }
+        else 
+        {
+            return;
         }
-        else{
-            stick_left = joy_left.GetStick();
-            if(prev_left<0.7 && stick_left[1]>0.7){
-                if(pos > 0){
-                    pos -= 1;
-                }
-                left_circle.transform.position = new Vector3(1920/2,1080/2-150*pos,-0.5f);
-            }
-            if(prev_left>-0.7 && stick_left[1]<-0.7){
-                if(pos < 2){
-                    pos += 1;
-                }
-                left_circle.transform.position = new Vector3(1920/2,1080/2-150*pos,-0.5f);
-            }
-            prev_left = stick_left[1];
-            if(joy_left.GetButtonDown(Joycon.Button.SHOULDER_2)){
-                buttons[pos].GetComponent<Button>().onClick.Invoke();
-            }
+        
+        PressBtnController(cube_left, 
+        stick_left, 
+        left_circle, 
+        joy_left, 
+        pos_left, 
+        prev_left, 
+        pressed_left, 
+        SetPosLeft,
+        SetPrevLeft);
+        if(joy_left.GetButtonDown(Joycon.Button.SHOULDER_2)){
+            pressed_left = true;
         }
-        RaycastHit hit_right;
-        if (Physics.Raycast(cube_right.transform.position, cube_right.transform.forward,out hit_right, Mathf.Infinity))
-        {   
-            right_circle.transform.position = hit_right.point;
-
-            Debug.DrawRay(cube_right.transform.position, cube_right.transform.forward * hit_right.distance, Color.yellow);
-            GameObject colliderObject = hit_right.collider.gameObject;
-            Button button = colliderObject.GetComponent<Button>();
-            if(button != null && joy_right.GetButtonDown(Joycon.Button.SHOULDER_2)){
-                button.onClick.Invoke();
-            }
+        else if(joy_left.GetButtonUp(Joycon.Button.SHOULDER_2)){
+            pressed_left = false;
         }
-        else {
-            stick_right = joy_right.GetStick();
-            if(prev_right<0.7 && stick_right[1]>0.7){
-                if(pos > 0){
-                    pos -= 1;
-                }
-                right_circle.transform.position = new Vector3(1920/2,1080/2-150*pos,-0.5f);
-            }
-            if(prev_right>-0.7 && stick_right[1]<-0.7){
-                if(pos < 2){
-                    pos += 1;
-                }
-                right_circle.transform.position = new Vector3(1920/2,1080/2-150*pos,-0.5f);
-            }
-            prev_right = stick_right[1];
-            if(joy_right.GetButtonDown(Joycon.Button.SHOULDER_2)){
-                buttons[pos].GetComponent<Button>().onClick.Invoke();
-            }
+        
+        PressBtnController(cube_right, 
+        stick_right, 
+        right_circle, 
+        joy_right, 
+        pos_right, 
+        prev_right, 
+        pressed_right, 
+        SetPosRight,
+        SetPrevRight);
+        if(joy_right.GetButtonDown(Joycon.Button.SHOULDER_2)){
+            pressed_right = true;
+        }
+        else if(joy_right.GetButtonUp(Joycon.Button.SHOULDER_2)){
+            pressed_right = false;
         }
 
 
@@ -134,16 +123,95 @@ public class MainMenu : MonoBehaviour
 
     public void PlayBtn()
     {
-        SceneManager.LoadScene("FlappyBirdType");
+        Debug.Log("jugar presionado");
+        SceneManager.LoadScene("Tutorial");
     }
 
     public void CalibrateBtn()
     {
+        Debug.Log("calibrar presionado");
         SceneManager.LoadScene("Configure");
     }
 
     public void ExitBtn() 
     {
+        Debug.Log("Salir presionado");
         Application.Quit();
+    }
+
+    public void BackBtn() 
+    {
+        Debug.Log("Volver presionado");
+        SceneManager.LoadScene("MainMenu");
+    }
+
+    public void PressBtnController(GameObject cube, 
+    float[] stick, 
+    GameObject circle, 
+    Joycon joy, 
+    int pos, 
+    float prev, 
+    bool pressed, 
+    Action<int> SetPos, 
+    Action<float> SetPrev){
+        RaycastHit hit;
+
+        if (Physics.Raycast(cube.transform.position, cube.transform.forward,out hit, Mathf.Infinity))
+        {   
+            circle.transform.position = hit.point;
+
+            Debug.DrawRay(cube.transform.position, cube.transform.forward * hit.distance, Color.yellow);
+            //Debug.Log("Did Hit");
+            GameObject colliderObject = hit.collider.gameObject;
+            Button button = colliderObject.GetComponent<Button>();
+
+            if(!pressed && button != null && joy.GetButton(Joycon.Button.SHOULDER_2)){
+                button.onClick.Invoke();
+            }
+            
+            SetPos?.Invoke(-1);
+        }
+        else{
+            stick = joy.GetStick();
+            if(prev<0.7 && stick[1]>0.7){
+                if(pos > 0){
+                    pos -= 1;
+                    SetPos?.Invoke(pos);
+                }
+                circle.transform.position = new Vector3(1920/2,1080/2-initialPos-300*pos,-0.5f);
+            }
+            if(prev>-0.7 && stick[1]<-0.7){
+                if(pos < buttons.Length-1){
+                    pos += 1;
+                    SetPos?.Invoke(pos);
+                }
+                circle.transform.position = new Vector3(1920/2,1080/2-initialPos-300*pos,-0.5f);
+            }
+            prev = stick[1];
+            SetPrev?.Invoke(prev);
+            if(!pressed && joy.GetButton(Joycon.Button.SHOULDER_2)){
+                buttons[pos].GetComponent<Button>().onClick.Invoke();
+            }
+        }
+    }
+
+    private void SetPosLeft(int pos)
+    {
+        pos_left = pos;
+    }
+
+    private void SetPosRight(int pos)
+    {
+        pos_right = pos;
+    }
+
+    private void SetPrevLeft(float prev)
+    {
+        prev_left = prev;
+    }
+
+    private void SetPrevRight(float prev)
+    {
+        prev_right = prev;
     }
 }

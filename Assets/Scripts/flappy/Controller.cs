@@ -11,15 +11,10 @@ public class Controller : MonoBehaviour
     public int jc_2 = 1;
     public float strength = 5f;
     public float gravity = -9.81f;
-    public float tilt = 5f;
     
-    public bool Calibration;
-    public bool StartGame;
-    public bool Tutorialbool;
-
     private Vector3 direction;
     
-    public CanvasController canvasController;
+    public Canvas canvasController;
 
     public GameObject ala_der;
     public GameObject rot_der;
@@ -48,9 +43,6 @@ public class Controller : MonoBehaviour
     void Start()
     {   
         startTime = Time.time;
-        Calibration = false;
-        Tutorialbool = true;
-        StartGame = true;
         joycons = JoyconManager.Instance.j;
         Vector3 position = transform.position;
         position.y = 2f;
@@ -92,31 +84,6 @@ public class Controller : MonoBehaviour
     void Update() {
         if (joycons.Count >= 0)
         {
-            if (Calibration == false && joy_left.GetButtonDown(Joycon.Button.SHOULDER_2) && joy_right.GetButtonDown(Joycon.Button.SHOULDER_2)){
-                joy_right.Recenter();
-                joy_left.Recenter();
-                Calibration = true;
-                canvasController.CalibrationEnd();
-                Tutorialbool = false;
-            }
-            if (Tutorialbool == false && joy_left.GetButtonDown(Joycon.Button.SHOULDER_1) && joy_right.GetButtonDown(Joycon.Button.SHOULDER_1)){
-                Tutorialbool = true;
-                canvasController.TutorialEnd();
-                StartGame = false;
-            }
-
-            if (StartGame == false && joy_left.GetButtonDown(Joycon.Button.SHOULDER_2) && joy_right.GetButtonDown(Joycon.Button.SHOULDER_2)){
-                canvasController.StartPointEnd();
-                StartGame = true;
-                Quaternion orient_left = joy_left.GetVector();
-                Quaternion orient_right = joy_right.GetVector();
-                cube_left.transform.rotation = orient_left;
-                cube_left.transform.Rotate(90,0,0,Space.World);
-                cube_right.transform.rotation = orient_right;
-                cube_right.transform.Rotate(90,0,0,Space.World);
-                prev_angle_left = Vector3.Angle(cube_left.transform.up, Vector3.up);
-                prev_angle_right = Vector3.Angle(cube_right.transform.up, Vector3.up);
-            }
             if ( joy_left.GetButtonDown(Joycon.Button.DPAD_DOWN) && joy_right.GetButtonDown(Joycon.Button.DPAD_DOWN)){
                 canvasController.Pause();
             }
@@ -208,6 +175,7 @@ public class Controller : MonoBehaviour
     private void OnCollisionEnter(Collision other) {
         sw.Close();
         PlayerPrefs.SetInt("Puntaje", PuntajeCanvas.puntaje);
+        PlayerPrefs.SetString("Path", path);
         canvasController.Perdiste();
     }
 }

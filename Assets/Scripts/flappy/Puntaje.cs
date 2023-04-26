@@ -19,7 +19,7 @@ public class Puntaje : MonoBehaviour
     private void OnTriggerEnter(Collider other) {
         if (other.gameObject.name == "Player") 
     {
-        PuntajeCanvas.puntaje++;
+        PuntajeCanvas.puntaje += 200;
     }
     }
 }

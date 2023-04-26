@@ -6,20 +6,12 @@ using UnityEngine.UI;
 
 public class GameLoad : MonoBehaviour
 {
-    private float GameTime;
     // Start is called before the first frame update
-    void Start()
+    IEnumerator Start()
     {
-        GameTime = 0;
-    }
-
-    // Update is called once per frame
-
-    void Update()
-    {
-        GameTime += Time.deltaTime;
-        if(GameTime>1){
-            SceneManager.LoadScene("MainMenu");
-        }
+        // Wait for the loading scene manager to start
+        yield return new WaitUntil(() => JoyconManager.Instance != null);
+        
+        SceneManager.LoadScene("MainMenu");
     }
 }

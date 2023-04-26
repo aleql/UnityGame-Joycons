@@ -7,22 +7,13 @@ public class CanvasController : MonoBehaviour
 {
     public GameObject canvasCalibration;
     public GameObject canvasStartPoint;
-    public GameObject canvasPuntaje;
-    public GameObject canvasAngulo;
-    public GameObject canvasPause;
-
     public GameObject Tutorial;
-    
     public GameObject Camera;
-
-    private bool pause;
-
 
     // Start is called before the first frame update
     void Start()
     {
         Time.timeScale = 0;
-        pause = false;
     }
 
     // Update is called once per frame
@@ -30,11 +21,6 @@ public class CanvasController : MonoBehaviour
     {
         
     }
-
-    public void Perdiste(){
-        SceneManager.LoadScene(3);
-    }
-
 
     public void CalibrationEnd(){
         canvasCalibration.SetActive(false);
@@ -49,22 +35,8 @@ public class CanvasController : MonoBehaviour
     }
 
     public void StartPointEnd(){
-        canvasStartPoint.SetActive(false);
-        canvasPuntaje.SetActive(true);
-        canvasAngulo.SetActive(true);
         Time.timeScale = 1;
-    }
-
-    public void Pause(){
-        pause = !pause;
-        if(pause){
-            canvasPause.SetActive(true);
-            Time.timeScale = 0;
-        }
-        else{
-            canvasPause.SetActive(false);
-            Time.timeScale = 1;
-        }
+        SceneManager.LoadScene("FlappyBirdType");
     }
 
     public void MainMenu(){

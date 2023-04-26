@@ -7,6 +7,7 @@ public class PuntajeManzana : MonoBehaviour
     // Start is called before the first frame update
     public float velocidad;
     public static int manzanas;
+    public int puntaje;
     void Start()
     {
         
@@ -23,7 +24,7 @@ public class PuntajeManzana : MonoBehaviour
         if (other.gameObject.name == "Player") 
     {
         manzanas++;
-        PuntajeCanvas.puntaje += 100;
+        PuntajeCanvas.puntaje += puntaje;
         Destroy(gameObject);
     }
     }
