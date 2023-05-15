@@ -8,6 +8,7 @@ public class GeneradorManzana : MonoBehaviour
 
     private float tiempoInicial = 0;
     public GameObject manzana;
+    public GameObject manzanaDorada;
     public float maxPosY=5;
     public float minPosY=1;
     public float maxPosX=14;
@@ -15,6 +16,7 @@ public class GeneradorManzana : MonoBehaviour
 
     private Vector3 direction;
 
+    private int Contador;
     // Start is called before the first frame update
     void Start()
     {
@@ -64,10 +66,18 @@ public class GeneradorManzana : MonoBehaviour
         transform.position += direction * Time.deltaTime;
 
         if(tiempoInicial>tiempoMax){
-            GameObject newObs = Instantiate(manzana);
+            GameObject newObs;
+            if(Contador ==10){
+                newObs = Instantiate(manzanaDorada);
+                Contador =-1;
+            }
+            else{
+                newObs = Instantiate(manzana);
+            }
             newObs.transform.position = transform.position +new Vector3(0,0,0);
             Destroy(newObs, 12);
             tiempoInicial = 0;
+            Contador++;
         }
         else{
             tiempoInicial += Time.deltaTime;

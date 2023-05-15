@@ -32,4 +32,8 @@ public class Generador : MonoBehaviour
             tiempoInicial += Time.deltaTime;
         }
     }
+
+    public void SetMaxTime(float time){
+        tiempoMax = time;
+    }
 }

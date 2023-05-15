@@ -74,6 +74,8 @@ public class Controller : MonoBehaviour
             //File.WriteAllText(path, "Tiempo;Angulo_izq;DeltaAngulo_izq;Angulo_der;DeltaAngulo_der;puntaje;manzanas\n");
             sw = File.CreateText(path);
             sw.WriteLine("Tiempo;Angulo_izq;DeltaAngulo_izq;Angulo_der;DeltaAngulo_der;puntaje;manzanas");
+            
+            PlayerPrefs.SetString("Path", path);
         }
         catch (System.Exception)
         {
@@ -171,11 +173,6 @@ public class Controller : MonoBehaviour
         }
     }
 
-    
-    private void OnCollisionEnter(Collision other) {
-        sw.Close();
-        PlayerPrefs.SetInt("Puntaje", PuntajeCanvas.puntaje);
-        PlayerPrefs.SetString("Path", path);
-        canvasController.Perdiste();
-    }
+
+
 }

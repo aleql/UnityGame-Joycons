@@ -14,7 +14,8 @@ public class Obstaculo : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position += Vector3.back *velocidad*Time.deltaTime;  
+        transform.position += Vector3.back *velocidad*Time.deltaTime;
+        velocidad = GameplayManager.speed;
     }
 
 }

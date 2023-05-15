@@ -12,15 +12,14 @@ public class PlayerTutorial : MonoBehaviour
     Joycon joy_left;
     Joycon joy_right;
 
-    public bool Calibration, Tutorialbool, StartGame;
+    public bool Tutorialbool, StartGame;
 
     public CanvasController canvasController;
 
     // Start is called before the first frame update
     void Start()
     {
-        Calibration=false;
-        Tutorialbool=true;
+        Tutorialbool=false;
         StartGame=true;
                 
         joycons = JoyconManager.Instance.j;
@@ -41,13 +40,6 @@ public class PlayerTutorial : MonoBehaviour
     void Update() {
         if (joycons.Count >= 0)
         {
-            if (Calibration == false && joy_left.GetButton(Joycon.Button.SHOULDER_2) && joy_right.GetButton(Joycon.Button.SHOULDER_2)){
-                joy_right.Recenter();
-                joy_left.Recenter();
-                Calibration = true;
-                canvasController.CalibrationEnd();
-                Tutorialbool = false;
-            }
             if (Tutorialbool == false && joy_left.GetButton(Joycon.Button.SHOULDER_1) && joy_right.GetButton(Joycon.Button.SHOULDER_1)){
                 Tutorialbool = true;
                 canvasController.TutorialEnd();

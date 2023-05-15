@@ -99,6 +99,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   velocidad: 5
   puntaje: 100
+  health: 1
 --- !u!135 &3804093915535352301
 SphereCollider:
   m_ObjectHideFlags: 0

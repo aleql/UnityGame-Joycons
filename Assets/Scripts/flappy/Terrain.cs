@@ -18,5 +18,6 @@ public class Terrain : MonoBehaviour
             transform.position = transform.position + new Vector3(0,0,400);
         }
         transform.position += Vector3.back *velocidad*Time.deltaTime; 
+        velocidad = GameplayManager.speed;
     }
 }

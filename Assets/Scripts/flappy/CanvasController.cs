@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class CanvasController : MonoBehaviour
 {
-    public GameObject canvasCalibration;
     public GameObject canvasStartPoint;
     public GameObject Tutorial;
     public GameObject Camera;
@@ -22,12 +21,6 @@ public class CanvasController : MonoBehaviour
         
     }
 
-    public void CalibrationEnd(){
-        canvasCalibration.SetActive(false);
-        Camera.transform.position = new Vector3(595, 2, -10);
-        Tutorial.SetActive(true);
-    }
-
     public void TutorialEnd(){
         Camera.transform.position = new Vector3(10, 3, -2);
         Tutorial.SetActive(false);
@@ -41,6 +34,6 @@ public class CanvasController : MonoBehaviour
 
     public void MainMenu(){
         Time.timeScale = 1;
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene("MainMenu");
     }
 }
