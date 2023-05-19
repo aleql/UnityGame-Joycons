@@ -11,7 +11,7 @@ public class CanvasGameover : MonoBehaviour
     public TMP_InputField pathFile;
 
     public void Reiniciar(){
-        SceneManager.LoadScene("FlappyBirdType");
+        SceneManager.LoadScene(PlayerPrefs.GetString("UltimoJuego"));
     }
 
     public void BackMenu(){

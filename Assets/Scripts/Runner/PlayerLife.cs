@@ -22,6 +22,8 @@ public class PlayerLife : MonoBehaviour, IPickable, IDamagable
     // Start is called before the first frame update
     void Start()
     {
+        Physics2D.IgnoreLayerCollision(7, 8, false);
+        Physics2D.IgnoreLayerCollision(7, 6, false);
         _playerRigidbody = GetComponent<Rigidbody2D>();
         healthbar.SetMaxHealth(maxHealth);
         currentHealth = maxHealth;

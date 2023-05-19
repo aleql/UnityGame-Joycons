@@ -19,7 +19,6 @@ public class fireMove : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        Debug.Log(collider);
         if (collider.gameObject.TryGetComponent(out IDamagable pickable))
         {   
             pickable.Hit(damage);

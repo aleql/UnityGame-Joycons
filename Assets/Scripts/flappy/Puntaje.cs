@@ -17,7 +17,14 @@ public class Puntaje : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other) {
-        if (other.gameObject.name == "Player") 
+        if (other.gameObject.tag == "Player") 
+    {
+        PuntajeCanvas.puntaje += 200;
+    }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other) {
+        if (other.gameObject.tag == "Player") 
     {
         PuntajeCanvas.puntaje += 200;
     }

@@ -23,6 +23,8 @@ public class PlayerController : MonoBehaviour
     private float prev_angle_left;
     private float prev_angle_right;
 
+    [SerializeField] private Vector3 prevAccelLeft;
+    [SerializeField] private Vector3 prevAccelRight;
     
     [SerializeField] private float deltaAngleLeft;
     [SerializeField] private float deltaAngleRight;
@@ -42,7 +44,7 @@ public class PlayerController : MonoBehaviour
     public float maxEnergy = 10f;
     public float currentEnergy;
 
-    [SerializeField] private float timeShoot = 2f;
+    [SerializeField] private float timeShoot = 0f;
 
     public Healthbar energybar;
 
@@ -52,7 +54,8 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        startTime = Time.time;
+        Time.timeScale = 0.8f;
         energybar.SetMaxHealth(maxEnergy);
         currentEnergy = maxEnergy/2;
 
@@ -87,7 +90,6 @@ public class PlayerController : MonoBehaviour
             path = Application.persistentDataPath +"/"+ fileName;
             sw = File.CreateText(path);
             sw.WriteLine("Tiempo;Angulo_izq;DeltaAngulo_izq;Angulo_der;DeltaAngulo_der;puntaje;manzanas");
-            
             PlayerPrefs.SetString("Path", path);
         }
         catch (System.Exception)
@@ -109,6 +111,21 @@ public class PlayerController : MonoBehaviour
             Quaternion orient_left = joy_left.GetVector();
             Quaternion orient_right = joy_right.GetVector();
 
+            Vector3 accelLeft = joy_left.GetAccel();
+
+            Vector3 deltaAccelLeft = accelLeft - prevAccelLeft;
+
+            prevAccelLeft = accelLeft;
+
+            Vector3 accelRight = joy_right.GetAccel();
+
+            Vector3 deltaAccelRight = accelRight - prevAccelRight;
+
+            prevAccelRight = accelRight;
+
+            float MagLeft = deltaAccelLeft.magnitude;
+            float MagRight = deltaAccelRight.magnitude;
+
             cube_left.transform.rotation = orient_left;
             cube_left.transform.Rotate(90,0,0,Space.World);
             cube_right.transform.rotation = orient_right;
@@ -116,8 +133,12 @@ public class PlayerController : MonoBehaviour
             
             angle_right = Vector3.Angle(cube_right.transform.forward*-1, Vector3.up);
             angle_left = Vector3.Angle(cube_left.transform.forward*-1, Vector3.up);
+            
+            deltaAngleLeft = angle_left - prev_angle_left;
+            deltaAngleRight = angle_right - prev_angle_right;
 
-            if (IsGrounded() && Jumped()){
+            if (IsGrounded() && Jumped() && MagLeft>1.5f && MagRight>1.5f){
+                Debug.Log("Jump");
                 Jump();
                 animator.SetBool("IsJumping", true);
             }
@@ -126,7 +147,7 @@ public class PlayerController : MonoBehaviour
                 MovePlayer();
             }
 
-            if(reloadShoot() && Shoot()){
+            if(reloadShoot() && MagLeft>1.5f && MagRight>1.5f && Shoot()){
                 shootfire.Shoot();
             }
 
@@ -139,15 +160,29 @@ public class PlayerController : MonoBehaviour
 
             prev_angle_right = angle_right;
             prev_angle_left = angle_left;
+
+            float gameTime = Time.time - startTime;
+            sw.WriteLine( 
+            gameTime.ToString("F2")
+            +";"
+            +(180-angle_left).ToString()
+            +";"
+            +deltaAngleLeft.ToString()
+            +";"
+            +(180-angle_right).ToString()
+            +";"
+            +deltaAngleRight.ToString()
+            +";"
+            +PuntajeCanvas.puntaje);
         }
     }
 
     private void EnergyDecrease(){
         if(currentEnergy>maxEnergy/2){
-            currentEnergy -= 1.4f*Time.deltaTime;
+            currentEnergy -= 1.5f*Time.deltaTime;
         }
         else if(currentEnergy>0){
-            currentEnergy -= 0.3f*Time.deltaTime;
+            currentEnergy -= 0.5f*Time.deltaTime;
         }
     }
 
@@ -159,10 +194,7 @@ public class PlayerController : MonoBehaviour
     }
 
     private bool Shoot(){
-        deltaAngleLeft = angle_left - prev_angle_left;
-        deltaAngleRight = angle_right - prev_angle_right;
-
-        if(deltaAngleLeft <-10 && deltaAngleRight<-10){
+        if(deltaAngleLeft<-10 && deltaAngleRight<-10){
             timeShoot = 2;
             return true;
         }
@@ -170,10 +202,7 @@ public class PlayerController : MonoBehaviour
     } 
 
     private bool Jumped(){
-        deltaAngleLeft = angle_left - prev_angle_left;
-        deltaAngleRight = angle_right - prev_angle_right;
-
-        if(deltaAngleLeft > 20 && deltaAngleRight>20){
+        if(deltaAngleLeft>10 && deltaAngleRight>10){
             return true;
         }
         return false;
@@ -186,7 +215,7 @@ public class PlayerController : MonoBehaviour
         if((deltaAngleLeft > 0 && deltaAngleRight<0) || (deltaAngleLeft<0 && deltaAngleRight>0)){
             var horizontalInput = (Mathf.Abs(deltaAngleLeft) + Mathf.Abs(deltaAngleRight))/2;
             if(currentEnergy <maxEnergy){
-                currentEnergy += 0.8f*Mathf.Abs(horizontalInput)*Time.deltaTime;
+                currentEnergy += 0.7f*Mathf.Abs(horizontalInput)*Time.deltaTime;
             }
         }
         if(currentEnergy > maxEnergy/5){

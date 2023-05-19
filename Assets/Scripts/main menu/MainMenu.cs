@@ -68,6 +68,10 @@ public class MainMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(joy_right.GetButtonDown(Joycon.Button.SHOULDER_2) && joy_left.GetButtonDown(Joycon.Button.SHOULDER_2)){
+            joy_right.Recenter();
+            joy_left.Recenter();
+        }
         if (joycons.Count >= 0)
         {
             Quaternion orient_left = joy_left.GetVector();
@@ -124,7 +128,7 @@ public class MainMenu : MonoBehaviour
     public void PlayBtn()
     {
         Debug.Log("jugar presionado");
-        SceneManager.LoadScene("Tutorial");
+        SceneManager.LoadScene("Selection");
     }
 
     public void CalibrateBtn()

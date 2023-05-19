@@ -23,7 +23,7 @@ public class RunnerManager : MonoBehaviour
     {
         if(PuntajeCanvas.puntaje +puntajes >=1000){
             puntajes-=1000;
-            speed = speed * 1.1f;
+            speed = speed * 1.01f;
             time = time*0.9f;
             generador.SetMaxTime(time);
         }

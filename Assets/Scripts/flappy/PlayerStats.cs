@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerStats : MonoBehaviour, IPickable
+public class PlayerStats : MonoBehaviour, IPickable, IDamagable
 {
     
     public int maxHealth =10;

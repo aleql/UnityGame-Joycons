@@ -15,6 +15,7 @@ public class EnemyLife : MonoBehaviour, IDamagable
         if (life <= 0)
         {
             Destroy(gameObject);
+            PuntajeCanvas.puntaje += 200;
         }
     }
     
@@ -26,6 +27,7 @@ public class EnemyLife : MonoBehaviour, IDamagable
         if (life <= 0)
         {
             Destroy(gameObject);
+            PuntajeCanvas.puntaje += 200;
         }
     }
 

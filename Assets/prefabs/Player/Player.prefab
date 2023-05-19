@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6203132567934873193}
   - component: {fileID: 6974596464594633344}
   - component: {fileID: 3756518247312415625}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Boots
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -86,9 +86,9 @@ GameObject:
   - component: {fileID: 7357056259535780541}
   - component: {fileID: 142051359547557557}
   - component: {fileID: 5262541195022531900}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -122,12 +122,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa60054ce8ef43a439798efe455efb8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stick: []
+  jc_1: 0
+  jc_2: 1
+  prevAccelLeft: {x: 0, y: 0, z: 0}
+  prevAccelRight: {x: 0, y: 0, z: 0}
+  deltaAngleLeft: 0
+  deltaAngleRight: 0
+  cube_left: {fileID: 0}
+  cube_right: {fileID: 0}
   playerSpeed: 5
   jumpPower: 5
   animator: {fileID: 7357056259535780541}
   grounded: 0
+  shootfire: {fileID: 0}
   maxEnergy: 10
   currentEnergy: 0
+  timeShoot: 2
   energybar: {fileID: 0}
   canMove: 0
   reboundSpeed: {x: 0, y: 0}
@@ -164,7 +175,7 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_UsedByComposite: 1
+  m_UsedByComposite: 0
   m_Offset: {x: 0.036664397, y: -0.44155276}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
@@ -265,7 +276,6 @@ MonoBehaviour:
   controllerShoot: {fileID: 4852216232660456342}
   fire: {fileID: 6116237110221070599, guid: e25d6e7adf6717b47b8ffafc757c8742, type: 3}
   animator: {fileID: 0}
-  shoot: 0
 --- !u!1 &8784424103216386666
 GameObject:
   m_ObjectHideFlags: 0
@@ -275,7 +285,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4852216232660456342}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: ControllerFire
   m_TagString: Untagged
   m_Icon: {fileID: 0}

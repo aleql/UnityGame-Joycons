@@ -49,6 +49,7 @@ public class SelectionManager : MonoBehaviour
     }
 
     public void StartGame() {
+        PlayerPrefs.SetString("UltimoJuego", selectManager.scenes[index].scene);
         SceneManager.LoadScene(selectManager.scenes[index].scene);
     }
 }

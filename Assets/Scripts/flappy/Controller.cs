@@ -9,7 +9,7 @@ public class Controller : MonoBehaviour
     public float[] stick;
     public int jc_1 = 0;
     public int jc_2 = 1;
-    public float strength = 5f;
+    public float strength = 3f;
     public float gravity = -9.81f;
     
     private Vector3 direction;
@@ -130,7 +130,7 @@ public class Controller : MonoBehaviour
                 direction.x -= (Grad_force_der-Grad_force_izq);
             }
             else if(Grad_force_izq > 1+Grad_force_der){
-                direction.x += (Grad_force_izq-Grad_force_der);
+                direction.x += 1.2f*(Grad_force_izq-Grad_force_der);
             }
             else{ //amortigua la inclinación si esta balanceado
                 direction.x = direction.x*0.9f;
@@ -138,7 +138,7 @@ public class Controller : MonoBehaviour
             if(Mathf.Abs(direction.x) <0.2){
                 direction.x = 0;
             }
-            direction.y += (Grad_force_der+Grad_force_izq)/2;
+            direction.y += (Grad_force_der+Grad_force_izq);
             
             
             direction.y -= gravity*Time.deltaTime;

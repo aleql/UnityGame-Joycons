@@ -4983,7 +4983,7 @@ GameObject:
   - component: {fileID: 124437268}
   - component: {fileID: 124437271}
   - component: {fileID: 124437270}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: ala izq
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5430,7 +5430,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 385244219}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: rot der
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10481,7 +10481,7 @@ GameObject:
   - component: {fileID: 523138325}
   - component: {fileID: 523138328}
   - component: {fileID: 523138327}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: ala der
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15461,9 +15461,9 @@ GameObject:
   - component: {fileID: 681055518}
   - component: {fileID: 681055519}
   - component: {fileID: 681055520}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -15563,7 +15563,7 @@ MonoBehaviour:
   stick: []
   jc_1: 0
   jc_2: 1
-  strength: 8
+  strength: 3
   gravity: 8
   canvasController: {fileID: 372609198}
   ala_der: {fileID: 0}
@@ -31388,7 +31388,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1472068179}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: rot izq
   m_TagString: Untagged
   m_Icon: {fileID: 0}
