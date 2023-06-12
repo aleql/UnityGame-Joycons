@@ -86,6 +86,7 @@ GameObject:
   - component: {fileID: 7357056259535780541}
   - component: {fileID: 142051359547557557}
   - component: {fileID: 5262541195022531900}
+  - component: {fileID: 3160076379743469365}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -135,13 +136,13 @@ MonoBehaviour:
   jumpPower: 5
   animator: {fileID: 7357056259535780541}
   grounded: 0
-  shootfire: {fileID: 0}
+  shootfire: {fileID: 5262541195022531900}
   maxEnergy: 10
   currentEnergy: 0
   timeShoot: 2
   energybar: {fileID: 0}
-  canMove: 0
-  reboundSpeed: {x: 0, y: 0}
+  canMove: 1
+  reboundSpeed: {x: 6, y: 6}
 --- !u!50 &3317965203036503112
 Rigidbody2D:
   serializedVersion: 4
@@ -199,7 +200,7 @@ Animator:
   m_GameObject: {fileID: 3317965203036503108}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: d799ffda68289ff449f42710589720d4, type: 2}
+  m_Controller: {fileID: 22100000, guid: 27b965a5360e7404685b76dc1c0c2620, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -275,7 +276,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controllerShoot: {fileID: 4852216232660456342}
   fire: {fileID: 6116237110221070599, guid: e25d6e7adf6717b47b8ffafc757c8742, type: 3}
-  animator: {fileID: 0}
+  animator: {fileID: 7357056259535780541}
+--- !u!114 &3160076379743469365
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3317965203036503108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3b8ee062dfccde4ca793a9ab69dc600, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 20
+  currentHealth: 20
+  canvasController: {fileID: 0}
+  healthbar: {fileID: 0}
+  controlTimeLose: 2
 --- !u!1 &8784424103216386666
 GameObject:
   m_ObjectHideFlags: 0

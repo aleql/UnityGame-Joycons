@@ -22,6 +22,8 @@ public class PlayerLife : MonoBehaviour, IPickable, IDamagable
     // Start is called before the first frame update
     void Start()
     {
+        canvasController = GameObject.Find("LogicaCanvas").GetComponent<Canvas>();
+        healthbar = GameObject.Find("Vida/Healthbar").GetComponent<Healthbar>();
         Physics2D.IgnoreLayerCollision(7, 8, false);
         Physics2D.IgnoreLayerCollision(7, 6, false);
         _playerRigidbody = GetComponent<Rigidbody2D>();
@@ -57,6 +59,7 @@ public class PlayerLife : MonoBehaviour, IPickable, IDamagable
 
     public void Hit(int damage, Vector2 position)
     {
+        Debug.Log("hola mundo");
         // Update health var
         currentHealth -= damage;
         SetHealth(currentHealth);

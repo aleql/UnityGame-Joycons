@@ -12,6 +12,11 @@ public class ShootFire : MonoBehaviour
 
     
     // Update is called once per frame
+    public void Update(){
+        if(Input.GetButtonDown("Fire1")){
+            Shoot();
+        }
+    }
 
     public void Shoot(){
         StartCoroutine(Attack());

@@ -117,7 +117,7 @@ MonoBehaviour:
   stick: []
   jc_1: 0
   jc_2: 1
-  strength: 8
+  strength: 15
   gravity: 8
   canvasController: {fileID: 0}
   ala_der: {fileID: 0}

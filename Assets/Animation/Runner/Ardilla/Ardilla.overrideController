@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Ardilla
+  m_Controller: {fileID: 9100000, guid: d799ffda68289ff449f42710589720d4, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 67603321e6bf8384f970bb1ce6d404a6, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 33a93e6cc2d65aa45ab91b1411f52c5c, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 6da1c995c640a0046bbb501a30771c2e, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: a3cd31bab5164b048b4039a179bbecc9, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 0456b59b7c26ff74584674e915d5d54a, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 9600b6a0df8953a439d4b2c87dba9315, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: fae2b0c6334851f408bbacfeb707d2df, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 56cd2832d264321438f4379f193eb489, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 02942053e385e374d999bada26ca9190, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 69b6005ceb7e0a4468563878c6413f5f, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: f51c66cc43adfa84389430d92794f062, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: c3a9aa0fdbac9334693c7ad2325539a4, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: db1c0e30790623d47af7645c2d9d60b3, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 5805a9ba424ffdf4289644b42e3ca11f, type: 2}

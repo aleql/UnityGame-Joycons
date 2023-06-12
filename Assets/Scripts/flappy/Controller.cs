@@ -71,7 +71,6 @@ public class Controller : MonoBehaviour
             string timestamp = System.DateTime.Now.ToString("yyyyMMddHHmmss");
             string fileName = "Angulos-" + timestamp + ".csv";
             path = Application.persistentDataPath +"/"+ fileName;
-            //File.WriteAllText(path, "Tiempo;Angulo_izq;DeltaAngulo_izq;Angulo_der;DeltaAngulo_der;puntaje;manzanas\n");
             sw = File.CreateText(path);
             sw.WriteLine("Tiempo;Angulo_izq;DeltaAngulo_izq;Angulo_der;DeltaAngulo_der;puntaje;manzanas");
             
@@ -126,11 +125,11 @@ public class Controller : MonoBehaviour
             if(Grad_force_der <0) Grad_force_der = 0; //esta subiendo el brazo, no recibe castigo
             if(Grad_force_izq <0) Grad_force_izq = 0; //esta subiendo el brazo, no recibe castigo
 
-            if(Grad_force_der > 1+Grad_force_izq){ //si un brazo realiza mas fuerza que el otro
-                direction.x -= (Grad_force_der-Grad_force_izq);
+            if(Grad_force_der > 0.3+Grad_force_izq){ //si un brazo realiza mas fuerza que el otro
+                direction.x -= 2f*(Grad_force_der-Grad_force_izq);
             }
-            else if(Grad_force_izq > 1+Grad_force_der){
-                direction.x += 1.2f*(Grad_force_izq-Grad_force_der);
+            else if(Grad_force_izq > 0.3+Grad_force_der){
+                direction.x += 2f*(Grad_force_izq-Grad_force_der);
             }
             else{ //amortigua la inclinación si esta balanceado
                 direction.x = direction.x*0.9f;
@@ -156,8 +155,7 @@ public class Controller : MonoBehaviour
             }
             transform.position += direction * Time.deltaTime;
             float gameTime = Time.time - startTime;
-            sw.WriteLine( 
-            gameTime.ToString("F2")
+            string text = gameTime.ToString("F2")
             +";"
             +(Angulos.angle_izq).ToString()
             +";"
@@ -169,7 +167,8 @@ public class Controller : MonoBehaviour
             +";"
             +PuntajeCanvas.puntaje
             +";"
-            +PuntajeManzana.manzanas);
+            +PuntajeManzana.manzanas;
+            sw.WriteLine(text);
         }
     }
 

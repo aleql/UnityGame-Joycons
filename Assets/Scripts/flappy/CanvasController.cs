@@ -12,7 +12,6 @@ public class CanvasController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Time.timeScale = 0;
     }
 
     // Update is called once per frame
@@ -28,12 +27,10 @@ public class CanvasController : MonoBehaviour
     }
 
     public void StartPointEnd(){
-        Time.timeScale = 1;
         SceneManager.LoadScene("FlappyBirdType");
     }
 
     public void MainMenu(){
-        Time.timeScale = 1;
         SceneManager.LoadScene("MainMenu");
     }
 }

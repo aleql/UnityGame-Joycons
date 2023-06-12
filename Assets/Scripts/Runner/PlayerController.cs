@@ -54,6 +54,10 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        energybar = GameObject.Find("Energia/Energybar").GetComponent<Healthbar>();
+
+        cube_left = GameObject.Find("Left");
+        cube_right = GameObject.Find("Right");
         startTime = Time.time;
         Time.timeScale = 0.8f;
         energybar.SetMaxHealth(maxEnergy);
@@ -89,7 +93,7 @@ public class PlayerController : MonoBehaviour
             string fileName = "Angulos-" + timestamp + ".csv";
             path = Application.persistentDataPath +"/"+ fileName;
             sw = File.CreateText(path);
-            sw.WriteLine("Tiempo;Angulo_izq;DeltaAngulo_izq;Angulo_der;DeltaAngulo_der;puntaje;manzanas");
+            sw.WriteLine("Tiempo;Angulo_izq;DeltaAngulo_izq;Angulo_der;DeltaAngulo_der;puntaje");
             PlayerPrefs.SetString("Path", path);
         }
         catch (System.Exception)
@@ -137,7 +141,7 @@ public class PlayerController : MonoBehaviour
             deltaAngleLeft = angle_left - prev_angle_left;
             deltaAngleRight = angle_right - prev_angle_right;
 
-            if (IsGrounded() && Jumped() && MagLeft>1.5f && MagRight>1.5f){
+            if (IsGrounded() && Jumped() && MagLeft>0.1f && MagRight>0.1f){
                 Debug.Log("Jump");
                 Jump();
                 animator.SetBool("IsJumping", true);
@@ -147,7 +151,7 @@ public class PlayerController : MonoBehaviour
                 MovePlayer();
             }
 
-            if(reloadShoot() && MagLeft>1.5f && MagRight>1.5f && Shoot()){
+            if(reloadShoot() && MagLeft>0.1f && MagRight>0.1f && Shoot()){
                 shootfire.Shoot();
             }
 
@@ -162,8 +166,7 @@ public class PlayerController : MonoBehaviour
             prev_angle_left = angle_left;
 
             float gameTime = Time.time - startTime;
-            sw.WriteLine( 
-            gameTime.ToString("F2")
+            string text = gameTime.ToString("F2")
             +";"
             +(180-angle_left).ToString()
             +";"
@@ -173,7 +176,8 @@ public class PlayerController : MonoBehaviour
             +";"
             +deltaAngleRight.ToString()
             +";"
-            +PuntajeCanvas.puntaje);
+            +PuntajeCanvas.puntaje;
+            sw.WriteLine(text);
         }
     }
 
@@ -213,7 +217,7 @@ public class PlayerController : MonoBehaviour
     private void MovePlayer()
     {
         if((deltaAngleLeft > 0 && deltaAngleRight<0) || (deltaAngleLeft<0 && deltaAngleRight>0)){
-            var horizontalInput = (Mathf.Abs(deltaAngleLeft) + Mathf.Abs(deltaAngleRight))/2;
+            var horizontalInput = (Mathf.Abs(deltaAngleLeft) + Mathf.Abs(deltaAngleRight));
             if(currentEnergy <maxEnergy){
                 currentEnergy += 0.7f*Mathf.Abs(horizontalInput)*Time.deltaTime;
             }

@@ -15563,7 +15563,7 @@ MonoBehaviour:
   stick: []
   jc_1: 0
   jc_2: 1
-  strength: 3
+  strength: 8
   gravity: 8
   canvasController: {fileID: 372609198}
   ala_der: {fileID: 0}
@@ -65186,10 +65186,10 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: 5207c84b0ce2e8241844e904065dc595, type: 3}
-  m_Type: 0
+  m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
-  m_FillMethod: 4
+  m_FillMethod: 0
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
