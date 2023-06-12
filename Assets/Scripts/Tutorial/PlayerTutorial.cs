@@ -12,15 +12,23 @@ public class PlayerTutorial : MonoBehaviour
     Joycon joy_left;
     Joycon joy_right;
 
-    public bool Calibration, Tutorialbool, StartGame;
+    public bool Tutorialbool, StartGame;
 
     public CanvasController canvasController;
+    [SerializeField] private float angle_left;
+    [SerializeField] private float angle_right;
+    public float timeLeft=2f;
+
+    public GameObject cube_left;
+    public GameObject cube_right;
+
+    public Healthbar loadbar;
 
     // Start is called before the first frame update
     void Start()
     {
-        Calibration=false;
-        Tutorialbool=true;
+        loadbar.SetMaxHealth(2);
+        Tutorialbool=false;
         StartGame=true;
                 
         joycons = JoyconManager.Instance.j;
@@ -41,13 +49,17 @@ public class PlayerTutorial : MonoBehaviour
     void Update() {
         if (joycons.Count >= 0)
         {
-            if (Calibration == false && joy_left.GetButton(Joycon.Button.SHOULDER_2) && joy_right.GetButton(Joycon.Button.SHOULDER_2)){
-                joy_right.Recenter();
-                joy_left.Recenter();
-                Calibration = true;
-                canvasController.CalibrationEnd();
-                Tutorialbool = false;
-            }
+            Quaternion orient_left = joy_left.GetVector();
+            Quaternion orient_right = joy_right.GetVector();
+
+            cube_left.transform.rotation = orient_left;
+            cube_left.transform.Rotate(90,0,0,Space.World);
+            cube_right.transform.rotation = orient_right;
+            cube_right.transform.Rotate(90,0,0,Space.World);
+            
+            angle_right = Vector3.Angle(cube_right.transform.forward*-1, Vector3.up);
+            angle_left = Vector3.Angle(cube_left.transform.forward*-1, Vector3.up);
+
             if (Tutorialbool == false && joy_left.GetButton(Joycon.Button.SHOULDER_1) && joy_right.GetButton(Joycon.Button.SHOULDER_1)){
                 Tutorialbool = true;
                 canvasController.TutorialEnd();
@@ -57,6 +69,20 @@ public class PlayerTutorial : MonoBehaviour
             if (StartGame == false && joy_left.GetButton(Joycon.Button.SHOULDER_2) && joy_right.GetButton(Joycon.Button.SHOULDER_2)){
                 canvasController.StartPointEnd();
             }
+            if(StartGame == false && TimeToStart()){
+                canvasController.StartPointEnd();
+            }
         }
+    }
+
+    private bool TimeToStart(){
+        if(angle_left>60 && angle_left<120 && angle_right>60 && angle_right<120){
+            timeLeft -=Time.deltaTime;
+        }
+        else{
+            timeLeft = 2f; 
+        }
+        loadbar.SetHealth(2-timeLeft);
+        return timeLeft<0;
     }
 }

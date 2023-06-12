@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class CanvasController : MonoBehaviour
 {
-    public GameObject canvasCalibration;
     public GameObject canvasStartPoint;
     public GameObject Tutorial;
     public GameObject Camera;
@@ -13,19 +12,12 @@ public class CanvasController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Time.timeScale = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
         
-    }
-
-    public void CalibrationEnd(){
-        canvasCalibration.SetActive(false);
-        Camera.transform.position = new Vector3(595, 2, -10);
-        Tutorial.SetActive(true);
     }
 
     public void TutorialEnd(){
@@ -35,12 +27,10 @@ public class CanvasController : MonoBehaviour
     }
 
     public void StartPointEnd(){
-        Time.timeScale = 1;
         SceneManager.LoadScene("FlappyBirdType");
     }
 
     public void MainMenu(){
-        Time.timeScale = 1;
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene("MainMenu");
     }
 }

@@ -37,13 +37,19 @@ public class MainMenu : MonoBehaviour
     public bool pressed_left = true;
     public bool pressed_right = true;
 
+    [SerializeField] private float timePass;
+    [SerializeField] public Healthbar loadbar;
+    [SerializeField] private bool Complement_left = false;
+    [SerializeField] private bool Complement_right = false;
+
 
     
     // Start is called before the first frame update
 
 
     void Start()
-    {
+    {   
+        loadbar.SetMaxHealth(2f);
         joycons = JoyconManager.Instance.j;
         if (joycons.Count < jc_2+1){
 			Destroy(gameObject);
@@ -67,7 +73,11 @@ public class MainMenu : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
+    {   
+        if(joy_right.GetButtonDown(Joycon.Button.SHOULDER_2) && joy_left.GetButtonDown(Joycon.Button.SHOULDER_2)){
+            joy_right.Recenter();
+            joy_left.Recenter();
+        }
         if (joycons.Count >= 0)
         {
             Quaternion orient_left = joy_left.GetVector();
@@ -94,7 +104,9 @@ public class MainMenu : MonoBehaviour
         prev_left, 
         pressed_left, 
         SetPosLeft,
-        SetPrevLeft);
+        SetPrevLeft,
+        Complement_right,
+        SetComplementLeft);
         if(joy_left.GetButtonDown(Joycon.Button.SHOULDER_2)){
             pressed_left = true;
         }
@@ -110,7 +122,9 @@ public class MainMenu : MonoBehaviour
         prev_right, 
         pressed_right, 
         SetPosRight,
-        SetPrevRight);
+        SetPrevRight,
+        Complement_left,
+        SetComplementRight);
         if(joy_right.GetButtonDown(Joycon.Button.SHOULDER_2)){
             pressed_right = true;
         }
@@ -124,7 +138,7 @@ public class MainMenu : MonoBehaviour
     public void PlayBtn()
     {
         Debug.Log("jugar presionado");
-        SceneManager.LoadScene("Tutorial");
+        SceneManager.LoadScene("Selection");
     }
 
     public void CalibrateBtn()
@@ -153,13 +167,15 @@ public class MainMenu : MonoBehaviour
     float prev, 
     bool pressed, 
     Action<int> SetPos, 
-    Action<float> SetPrev){
+    Action<float> SetPrev,
+    bool Complement,
+    Action<bool> SetComplement){
         RaycastHit hit;
 
         if (Physics.Raycast(cube.transform.position, cube.transform.forward,out hit, Mathf.Infinity))
         {   
             circle.transform.position = hit.point;
-
+            Debug.Log(hit.collider);
             Debug.DrawRay(cube.transform.position, cube.transform.forward * hit.distance, Color.yellow);
             //Debug.Log("Did Hit");
             GameObject colliderObject = hit.collider.gameObject;
@@ -168,7 +184,24 @@ public class MainMenu : MonoBehaviour
             if(!pressed && button != null && joy.GetButton(Joycon.Button.SHOULDER_2)){
                 button.onClick.Invoke();
             }
+
+            if(!pressed && button != null){
+                timePass += Time.deltaTime;
+                SetComplement?.Invoke(true);
+                if(timePass>2){
+                    timePass=0;
+                    SetComplement?.Invoke(false);
+                    button.onClick.Invoke();
+                }
+            }
+            else{
+                SetComplement?.Invoke(false);
+            }
             
+            if(button == null && !Complement){
+                timePass = 0;
+            }
+            loadbar.SetHealth(timePass);
             SetPos?.Invoke(-1);
         }
         else{
@@ -213,5 +246,13 @@ public class MainMenu : MonoBehaviour
     private void SetPrevRight(float prev)
     {
         prev_right = prev;
+    }
+
+    private void SetComplementLeft(bool data){
+        Complement_left = data;
+    }
+    
+    private void SetComplementRight(bool data){
+        Complement_right = data;
     }
 }

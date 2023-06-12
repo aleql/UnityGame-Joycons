@@ -8,6 +8,7 @@ public class PuntajeManzana : MonoBehaviour
     public float velocidad;
     public static int manzanas;
     public int puntaje;
+    public int health;
     void Start()
     {
         
@@ -18,14 +19,19 @@ public class PuntajeManzana : MonoBehaviour
     {
         transform.Rotate(0,20*Time.deltaTime,0);
         transform.position += Vector3.back *velocidad*Time.deltaTime; 
+        velocidad = GameplayManager.speed;
     }
 
-    private void OnTriggerEnter(Collider other) {
-        if (other.gameObject.name == "Player") 
+
+    private void OnTriggerEnter(Collider collider)
     {
-        manzanas++;
-        PuntajeCanvas.puntaje += puntaje;
-        Destroy(gameObject);
-    }
+        if (collider.TryGetComponent(out IPickable pickable))
+        {   
+            manzanas++;
+            PuntajeCanvas.puntaje += puntaje;
+            // Health the object that collide with me
+            pickable.Pick(health);
+            Destroy(gameObject);
+        }
     }
 }

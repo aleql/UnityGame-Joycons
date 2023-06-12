@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - suelo
+  - Ground
+  - Spike
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -12,11 +15,11 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
+  - SpikeBorder
+  - Player
+  - Enemy
+  - Fire
+  - Despawn
   - 
   - 
   - 

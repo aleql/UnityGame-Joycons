@@ -10,15 +10,15 @@ public class Canvas : MonoBehaviour
     private bool pause;
 
     public void Pause(){
-        pause = !pause;
-        if(pause){
-            canvasPause.SetActive(true);
-            Time.timeScale = 0;
-        }
-        else{
-            canvasPause.SetActive(false);
-            Time.timeScale = 1;
-        }
+        // pause = !pause;
+        // if(pause){
+        //     canvasPause.SetActive(true);
+        //     Time.timeScale = 0;
+        // }
+        // else{
+        //     canvasPause.SetActive(false);
+        //     Time.timeScale = 1;
+        // }
     }
 
     

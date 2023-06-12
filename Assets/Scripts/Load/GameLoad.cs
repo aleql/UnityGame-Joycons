@@ -12,6 +12,6 @@ public class GameLoad : MonoBehaviour
         // Wait for the loading scene manager to start
         yield return new WaitUntil(() => JoyconManager.Instance != null);
         
-        SceneManager.LoadScene("MainMenu");
+        SceneManager.LoadScene("Utility");
     }
 }

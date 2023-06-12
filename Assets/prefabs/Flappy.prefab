@@ -97,7 +97,7 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 635188045986937618}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
@@ -117,12 +117,9 @@ MonoBehaviour:
   stick: []
   jc_1: 0
   jc_2: 1
-  strength: 8
+  strength: 15
   gravity: 8
-  tilt: 5
-  Calibration: 0
-  StartGame: 0
-  gameOver: {fileID: 0}
+  canvasController: {fileID: 0}
   ala_der: {fileID: 0}
   rot_der: {fileID: 0}
   ala_izq: {fileID: 0}

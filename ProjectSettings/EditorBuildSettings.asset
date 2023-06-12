@@ -23,4 +23,22 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Tutorial.unity
     guid: 5d2fa291312f09648b635582457e332e
+  - enabled: 1
+    path: Assets/Scenes/Selection.unity
+    guid: 739654cb6c0d0b74b93e14ae2397a2d8
+  - enabled: 1
+    path: Assets/Scenes/RunnerType.unity
+    guid: 68b4aa6a0f0664942841baaf8e1dbf04
+  - enabled: 1
+    path: Assets/Scenes/Utility.unity
+    guid: f8838c275fad7044bab0c2082c677d66
+  - enabled: 1
+    path: Assets/Scenes/SelectChar.unity
+    guid: 63113be2e37fb5947841d632a068bb52
+  - enabled: 1
+    path: Assets/Scenes/RunnerTutorial.unity
+    guid: 50e542700649cb846981336e3d4a01e4
+  - enabled: 1
+    path: Assets/Scenes/Calibration.unity
+    guid: 846e4df812c8c7f41becbcc00aedad64
   m_configObjects: {}

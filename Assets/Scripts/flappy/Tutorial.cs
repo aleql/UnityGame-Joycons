@@ -58,7 +58,6 @@ public class Tutorial : MonoBehaviour
             transform.position = transform.position + new Vector3(0,-0.3f*1f/60f,0);
         }
         else if(!inc_left_up && !inc_left_down && !inc_right_up && !inc_right_down){
-            Debug.Log(1);
             fly =false;
             inc_left_up = true;
             inc_left_down = true;
