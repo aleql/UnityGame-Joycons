@@ -5087,7 +5087,9 @@ MonoBehaviour:
   system: {fileID: 947374921}
   system2: {fileID: 400134183}
   time: 5
+  timeApple: 5
   generador: {fileID: 311827810}
+  generadorManzanas: {fileID: 1942460460}
 --- !u!4 &158882646
 Transform:
   m_ObjectHideFlags: 0
@@ -5268,6 +5270,7 @@ MonoBehaviour:
   - {fileID: 9112133104221598884, guid: 11da7400759f0264f97d7ee1d7672220, type: 3}
   - {fileID: 9112133104221598884, guid: 966b4be7be19d6f449ec653e046796df, type: 3}
   - {fileID: 9112133104221598884, guid: 9d64476da34a6c34f9b17ac6eeba8bc0, type: 3}
+  - {fileID: 9112133104221598884, guid: e6528df6b53c2c6428106fda3c4462d6, type: 3}
   altura: 0
 --- !u!1 &320949140
 GameObject:

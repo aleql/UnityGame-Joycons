@@ -42,6 +42,7 @@ public class Controller : MonoBehaviour
 
     void Start()
     {   
+        gravity = -8f;
         startTime = Time.time;
         joycons = JoyconManager.Instance.j;
         Vector3 position = transform.position;
@@ -83,6 +84,7 @@ public class Controller : MonoBehaviour
     }
 
     void Update() {
+        gravity = GameplayManager.Gravity;
         if (joycons.Count >= 0)
         {
             if ( joy_left.GetButtonDown(Joycon.Button.DPAD_DOWN) && joy_right.GetButtonDown(Joycon.Button.DPAD_DOWN)){

@@ -4,17 +4,20 @@ using UnityEngine;
 
 public class RunnerManager : MonoBehaviour
 {
-    public static float speed = 5f;
+    [SerializeField] public static float speed = 5f;
 
     public float time = 5f;
 
     public SpikeGenerator generador;
 
-    private int puntajes = 100;
+    private int puntajes = 200;
+
+    [SerializeField] public static float Mag = 0.1f;
 
     // Start is called before the first frame update
     void Start()
     {
+        Mag = 0.1f;
         speed = 5f;
         time = 5f;
         AudioManager.Instance.SwitchToGameplayMusic();
@@ -24,9 +27,10 @@ public class RunnerManager : MonoBehaviour
     void Update()
     {
         if(PuntajeCanvas.puntaje >=puntajes){
+            Mag += Mag*0.2f;
             puntajes = puntajes*2;
-            speed = speed * 1.01f;
-            time = time*0.9f;
+            speed = speed * 1.2f;
+            time = time*0.7f;
             generador.SetMaxTime(time);
         }
     }

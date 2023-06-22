@@ -222,7 +222,7 @@ public class MainMenu : MonoBehaviour
             }
             prev = stick[1];
             SetPrev?.Invoke(prev);
-            if(!pressed && joy.GetButton(Joycon.Button.SHOULDER_2)){
+            if(!pressed && joy.GetButton(Joycon.Button.SHOULDER_2) && pos>=0){
                 buttons[pos].GetComponent<Button>().onClick.Invoke();
             }
         }

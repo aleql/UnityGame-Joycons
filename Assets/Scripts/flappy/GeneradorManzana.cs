@@ -83,4 +83,8 @@ public class GeneradorManzana : MonoBehaviour
             tiempoInicial += Time.deltaTime;
         }
     }
+
+    public void SetMaxTime(float time){
+        tiempoMax = time;
+    }
 }

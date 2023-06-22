@@ -51,9 +51,12 @@ public class PlayerController : MonoBehaviour
     public bool canMove;
 
     [SerializeField] private Vector2 reboundSpeed;
+
+    [SerializeField] private float magCompare; 
     // Start is called before the first frame update
     void Start()
     {
+        magCompare = 0.1f;
         energybar = GameObject.Find("Energia/Energybar").GetComponent<Healthbar>();
 
         cube_left = GameObject.Find("Left");
@@ -112,6 +115,7 @@ public class PlayerController : MonoBehaviour
     { 
         if (joycons.Count >= 0)
         {
+            magCompare = RunnerManager.Mag;
             Quaternion orient_left = joy_left.GetVector();
             Quaternion orient_right = joy_right.GetVector();
 
@@ -141,7 +145,7 @@ public class PlayerController : MonoBehaviour
             deltaAngleLeft = angle_left - prev_angle_left;
             deltaAngleRight = angle_right - prev_angle_right;
 
-            if (IsGrounded() && Jumped() && MagLeft>0.1f && MagRight>0.1f){
+            if (IsGrounded() && Jumped() && MagLeft>magCompare && MagRight>magCompare){
                 Debug.Log("Jump");
                 Jump();
                 animator.SetBool("IsJumping", true);
@@ -151,7 +155,7 @@ public class PlayerController : MonoBehaviour
                 MovePlayer();
             }
 
-            if(reloadShoot() && MagLeft>0.1f && MagRight>0.1f && Shoot()){
+            if(reloadShoot() && MagLeft>magCompare && MagRight>magCompare && Shoot()){
                 shootfire.Shoot();
             }
 
@@ -219,7 +223,7 @@ public class PlayerController : MonoBehaviour
         if((deltaAngleLeft > 0 && deltaAngleRight<0) || (deltaAngleLeft<0 && deltaAngleRight>0)){
             var horizontalInput = (Mathf.Abs(deltaAngleLeft) + Mathf.Abs(deltaAngleRight));
             if(currentEnergy <maxEnergy){
-                currentEnergy += 0.7f*Mathf.Abs(horizontalInput)*Time.deltaTime;
+                currentEnergy += 0.08f/magCompare*Mathf.Abs(horizontalInput)*Time.deltaTime;
             }
         }
         if(currentEnergy > maxEnergy/5){
