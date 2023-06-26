@@ -29,8 +29,8 @@ public class RunnerManager : MonoBehaviour
         if(PuntajeCanvas.puntaje >=puntajes){
             Mag += Mag*0.2f;
             puntajes = puntajes*2;
-            speed = speed * 1.2f;
-            time = time*0.7f;
+            speed = speed * 1.1f;
+            time = time*0.8f;
             generador.SetMaxTime(time);
         }
     }
