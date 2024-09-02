@@ -8,6 +8,11 @@ TagManager:
   - Ground
   - Spike
   - Enemy
+  - Obstacle
+  - UI
+  - Pointer
+  - FxTemporaire
+  - VerticalWall
   layers:
   - Default
   - TransparentFX
@@ -44,4 +49,28 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: SortableBackground
+    uniqueID: 1264473281
+    locked: 0
+  - name: Assets
+    uniqueID: 1251986029
+    locked: 0
+  - name: Ground
+    uniqueID: 157312349
+    locked: 0
+  - name: background1
+    uniqueID: 2785201177
+    locked: 0
+  - name: background2
+    uniqueID: 1028690657
+    locked: 0
+  - name: bacground3
+    uniqueID: 3552262027
+    locked: 0
+  - name: character
+    uniqueID: 1362261033
+    locked: 0
+  - name: UI
+    uniqueID: 2178981117
     locked: 0

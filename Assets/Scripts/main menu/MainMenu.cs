@@ -43,12 +43,16 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private bool Complement_right = false;
 
 
-    
+    private Dictionary<int, HoverButton> _buttonsHoveredLeft;
+    private Dictionary<int, HoverButton> _buttonsHoveredRight;
+
+
     // Start is called before the first frame update
 
 
     void Start()
-    {   
+    {
+        var a = gameObject.name;
         loadbar.SetMaxHealth(2f);
         joycons = JoyconManager.Instance.j;
         if (joycons.Count < jc_2+1){
@@ -69,6 +73,9 @@ public class MainMenu : MonoBehaviour
         
         pressed_left = joy_left.GetButton(Joycon.Button.SHOULDER_2);
         pressed_right = joy_right.GetButton(Joycon.Button.SHOULDER_2);
+
+        _buttonsHoveredLeft = new Dictionary<int, HoverButton>();
+        _buttonsHoveredRight = new Dictionary<int, HoverButton>();
     }
 
     // Update is called once per frame
@@ -106,7 +113,8 @@ public class MainMenu : MonoBehaviour
         SetPosLeft,
         SetPrevLeft,
         Complement_right,
-        SetComplementLeft);
+        SetComplementLeft,
+        _buttonsHoveredLeft);
         if(joy_left.GetButtonDown(Joycon.Button.SHOULDER_2)){
             pressed_left = true;
         }
@@ -124,7 +132,8 @@ public class MainMenu : MonoBehaviour
         SetPosRight,
         SetPrevRight,
         Complement_left,
-        SetComplementRight);
+        SetComplementRight,
+        _buttonsHoveredRight);
         if(joy_right.GetButtonDown(Joycon.Button.SHOULDER_2)){
             pressed_right = true;
         }
@@ -169,7 +178,9 @@ public class MainMenu : MonoBehaviour
     Action<int> SetPos, 
     Action<float> SetPrev,
     bool Complement,
-    Action<bool> SetComplement){
+    Action<bool> SetComplement,
+    Dictionary<int, HoverButton> buttonsHovered)
+    {
         RaycastHit hit;
 
         if (Physics.Raycast(cube.transform.position, cube.transform.forward,out hit, Mathf.Infinity))
@@ -180,19 +191,51 @@ public class MainMenu : MonoBehaviour
             //Debug.Log("Did Hit");
             GameObject colliderObject = hit.collider.gameObject;
             Button button = colliderObject.GetComponent<Button>();
+            HoverButton hoverButton = button != null ? button.GetComponent<HoverButton>() : null;
 
-            if(!pressed && button != null && joy.GetButton(Joycon.Button.SHOULDER_2)){
+            if (hoverButton != null)
+            {
+                Debug.Log("pipo");
+            }
+            /*
+            foreach (var cacheButtons in buttonsHovered.Values)
+            {
+                if (hoverButton == null || cacheButtons.GetInstanceID() != hoverButton.GetInstanceID())
+                {
+                    buttonsHovered.Remove(cacheButtons.GetInstanceID());
+                    cacheButtons.SimulatePointerExit();
+                }
+            }
+
+            if (hoverButton != null && !buttonsHovered.ContainsKey(button.GetInstanceID()))
+            {
+                buttonsHovered.Add(button.GetInstanceID(), hoverButton);
+                hoverButton.SimulatePointerEnter();
+            }
+            */
+
+
+            if (!pressed && button != null && joy.GetButton(Joycon.Button.SHOULDER_2)){
                 button.onClick.Invoke();
             }
 
             if(!pressed && button != null){
                 timePass += Time.deltaTime;
                 SetComplement?.Invoke(true);
-                if(timePass>2){
+
+                //PIPO
+                /*
+                if (hoverButton != null)
+                {
+                    hoverButton.SimulatePointerEnter();
+                }*/
+
+                if (timePass>2){
                     timePass=0;
                     SetComplement?.Invoke(false);
                     button.onClick.Invoke();
                 }
+                
             }
             else{
                 SetComplement?.Invoke(false);
@@ -200,6 +243,13 @@ public class MainMenu : MonoBehaviour
             
             if(button == null && !Complement){
                 timePass = 0;
+                // PIPO
+                /*
+                if (hoverButton != null)
+                {
+                    hoverButton.SimulatePointerExit();
+                }
+                */
             }
             loadbar.SetHealth(timePass);
             SetPos?.Invoke(-1);

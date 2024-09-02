@@ -5,6 +5,7 @@ using System.IO;
 
 public class PlayerController : MonoBehaviour
 {
+    public static PlayerController Instance;
     private List<Joycon> joycons;
     public float[] stick;
     public int jc_1 = 0;
@@ -33,13 +34,13 @@ public class PlayerController : MonoBehaviour
     public GameObject cube_right;
 
     [SerializeField] private float playerSpeed = 10.0f;
-    [SerializeField] private float jumpPower = 5.0f;
+    [SerializeField] private float jumpPower = 50.0f;
     [SerializeField] private Animator animator;
     [SerializeField] private bool grounded = false;
     
     [SerializeField] private ShootFire shootfire;
-    
-    private Rigidbody2D _playerRigidbody;
+
+    [SerializeField] private Rigidbody2D _playerRigidbody;
 
     public float maxEnergy = 10f;
     public float currentEnergy;
@@ -47,8 +48,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float timeShoot = 0f;
 
     public Healthbar energybar;
+    //public GameObject energybar;
 
     public bool canMove;
+    [SerializeField] public bool invincibleFrames;
 
     [SerializeField] private Vector2 reboundSpeed;
 
@@ -56,8 +59,16 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        invincibleFrames = false;
         magCompare = 0.1f;
-        energybar = GameObject.Find("Energia/Energybar").GetComponent<Healthbar>();
+        if (energybar == null)
+        {
+            energybar = GameObject.Find("Canvas/PlayPanel/TopPanel/Energybar").GetComponent<Healthbar>();
+        }
 
         cube_left = GameObject.Find("Left");
         cube_right = GameObject.Find("Right");
@@ -112,8 +123,8 @@ public class PlayerController : MonoBehaviour
 
     // Update is called once per frame
     void FixedUpdate()
-    { 
-        if (joycons.Count >= 0)
+    {
+        if (RunnerController.Instance.currentGameState == RunnerController.RunnerGameStates.Playing && joycons != null && joycons.Count >= 0)
         {
             magCompare = RunnerManager.Mag;
             Quaternion orient_left = joy_left.GetVector();
@@ -161,6 +172,7 @@ public class PlayerController : MonoBehaviour
 
             EnergyDecrease();
             SetEnergy(currentEnergy);
+            Debug.Log(currentEnergy);
             
             playerSpeed = RunnerManager.speed*2;
 
@@ -232,7 +244,7 @@ public class PlayerController : MonoBehaviour
         else{
             animator.SetFloat("Speed", 0);
         }
-        _playerRigidbody.velocity = new Vector2(currentEnergy/maxEnergy * playerSpeed - playerSpeed/2, _playerRigidbody.velocity.y);
+        _playerRigidbody.velocity = new Vector2(currentEnergy/maxEnergy * playerSpeed - 3*playerSpeed/4, _playerRigidbody.velocity.y);
     }
 
     public void Rebound(Vector2 PointHit){

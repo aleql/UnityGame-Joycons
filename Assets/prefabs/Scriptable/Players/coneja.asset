@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   image: {fileID: 21300000, guid: d384cd0f32e96af499b8b6b0c533acb0, type: 3}
   NamePlayer: Coneja
-  player: {fileID: 3317965203036503108, guid: 679ffa303d052f148aead4add24088be, type: 3}
+  player: {fileID: 808866377885378459, guid: e9e0f289affcc3548b5223c11346f849, type: 3}

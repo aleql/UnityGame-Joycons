@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
-using System.IO;
 
 public class CanvasGameover : MonoBehaviour
 {
@@ -23,8 +20,5 @@ public class CanvasGameover : MonoBehaviour
         texto.text = "Puntaje Total: " + puntaje.ToString(); 
         string path = PlayerPrefs.GetString("Path");
         pathFile.text = path;
-    }
-
-    void Update(){  
     }
 }

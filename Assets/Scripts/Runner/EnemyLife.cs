@@ -16,6 +16,8 @@ public class EnemyLife : MonoBehaviour, IDamagable
         {
             Destroy(gameObject);
             PuntajeCanvas.puntaje += 200;
+            ScoreManager.Instance.Score("200", gameObject.transform.position);
+            StartCoroutine(HapticsControllerRunner.Instance.DestroyEffect(gameObject.transform.position));
         }
     }
     
@@ -28,6 +30,9 @@ public class EnemyLife : MonoBehaviour, IDamagable
         {
             Destroy(gameObject);
             PuntajeCanvas.puntaje += 200;
+            ScoreManager.Instance.Score("200", gameObject.transform.position);
+            StartCoroutine(HapticsControllerRunner.Instance.DestroyEffect(gameObject.transform.position));
+
         }
     }
 

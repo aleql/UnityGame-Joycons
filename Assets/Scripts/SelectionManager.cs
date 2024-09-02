@@ -20,6 +20,7 @@ public class SelectionManager : MonoBehaviour
         index = PlayerPrefs.GetInt("GameIndex", 0);
 
         UpdateScreen();
+        StartGame();
     }
 
     private void UpdateScreen() {
@@ -49,7 +50,7 @@ public class SelectionManager : MonoBehaviour
     }
 
     public void StartGame() {
-        PlayerPrefs.SetString("UltimoJuego", selectManager.scenes[index].scene);
-        SceneManager.LoadScene(selectManager.scenes[index].scene);
+        PlayerPrefs.SetString("UltimoJuego", selectManager.scenes[1].scene);
+        SceneManager.LoadScene(selectManager.scenes[1].scene);
     }
 }

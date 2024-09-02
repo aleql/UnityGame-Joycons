@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9cba0557e001244eaa52650e3270b41, type: 3}
   m_Name: Flappybird
   m_EditorClassIdentifier: 
-  image: {fileID: 21300000, guid: 39920bcfa53bdb04b85ce41bfc2755f6, type: 3}
+  image: {fileID: 21300000, guid: 28344f0e3c78ebd479fb70ce91b6e926, type: 3}
   sceneName: Juego 1
   scene: Tutorial

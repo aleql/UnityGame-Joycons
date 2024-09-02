@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static FlappyBirdController;
 
 public class PuntajeManzana : MonoBehaviour
 {
@@ -17,9 +18,12 @@ public class PuntajeManzana : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Rotate(0,20*Time.deltaTime,0);
-        transform.position += Vector3.back *velocidad*Time.deltaTime; 
-        velocidad = GameplayManager.speed;
+        if (FlappyBirdController.Instance.currentGameState == FlappyBirdGameStates.Playing)
+        {
+            transform.Rotate(0,20*Time.deltaTime,0);
+            transform.position += Vector3.back *velocidad*Time.deltaTime; 
+            velocidad = GameplayManager.speed;
+        }
     }
 
 
@@ -32,6 +36,9 @@ public class PuntajeManzana : MonoBehaviour
             // Health the object that collide with me
             pickable.Pick(health);
             Destroy(gameObject);
+
+            // Spawn Effect
+            HapticsController.Instance.PickUpEffect(puntaje);
         }
     }
 }

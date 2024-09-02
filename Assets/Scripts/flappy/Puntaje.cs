@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Puntaje : MonoBehaviour
@@ -18,15 +16,24 @@ public class Puntaje : MonoBehaviour
 
     private void OnTriggerEnter(Collider other) {
         if (other.gameObject.tag == "Player") 
-    {
-        PuntajeCanvas.puntaje += 200;
-    }
+        {
+            PuntajeCanvas.puntaje += 200;
+
+            Vector3 position = BirdPlayerController.Instance.transform.position;
+            position += new Vector3(0f, 3f, 0f);
+            ScoreManager.Instance.Score("200", position);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
         if (other.gameObject.tag == "Player") 
-    {
-        PuntajeCanvas.puntaje += 200;
-    }
+        {
+            PuntajeCanvas.puntaje += 200;
+
+            Vector3 position = BirdPlayerController.Instance.transform.position;
+            position += new Vector3(0f, 3f, 0f);
+            ScoreManager.Instance.Score("200", position);
+
+        }
     }
 }
